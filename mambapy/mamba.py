@@ -12,8 +12,8 @@ from mambapy.pscan import pscan
 
 This file closely follows the mamba_simple.py from the official Mamba implementation, and the mamba-minimal by @johnma2006.
 The major differences are :
--the convolution is done with torch.nn.Conv1d
--the selective scan is done in PyTorch
+- The convolution is done with torch.nn.Conv1d
+- The selective scan is done in PyTorch
 
 A sequential version of the selective scan is also available for comparison. Also, it is possible to use the official Mamba implementation.
 
@@ -131,7 +131,8 @@ class MambaBlock(nn.Module):
                               padding=config.d_conv - 1)
         
         # projects x to input-dependent delta, B, C
-        self.x_proj = nn.Linear(config.d_inner, config.dt_rank + 2 * config.d_state, bias=False)
+        self.x_proj = nn.Linear(config.d_inner, config.dt_rank + 2 * config.d_state, 
+                                bias=False)
 
         # projects delta from dt_rank to d_inner
         self.dt_proj = nn.Linear(config.dt_rank, config.d_inner, bias=True)
@@ -330,7 +331,7 @@ class MambaBlock(nn.Module):
 
     Concretely, these two quantities are put inside a cache tuple, and are named h and inputs respectively.
     h is (B, ED, N), and inputs is (B, ED, d_conv-1)
-    The MambaBlock.step() receives this cache, and, along with outputing the output, alos outputs the updated cache for the next call.
+    The MambaBlock.step() receives this cache, and, along with outputting the output, also outputs the updated cache for the next call.
 
     The cache object is initialized as follows : (None, torch.zeros()).
     When h is None, the selective scan function detects it and start with h=0.

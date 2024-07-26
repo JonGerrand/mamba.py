@@ -5,7 +5,7 @@ setup(
     version='1.0.0',
     packages=find_packages(),
     install_requires=[
-        'torch',
+        'torch', # <-- Should pin this for reproducibility.
     ],
     author='Alexandre TL',
     author_email='alexandretl3434@gmail.com',
