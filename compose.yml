@@ -1,5 +1,5 @@
 services:
-  mamba:
+  mamba-gpu:
     image: pytorch/pytorch:2.3.1-cuda11.8-cudnn8-runtime
     deploy:
       resources:
@@ -15,4 +15,12 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    entrypoint: ["sh", "-c", "exec /bin/bash"]
+
+  mamba-cpu:
+    image: pytorch/pytorch:2.3.1-cuda11.8-cudnn8-runtime
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/workspace
     entrypoint: ["sh", "-c", "exec /bin/bash"]
